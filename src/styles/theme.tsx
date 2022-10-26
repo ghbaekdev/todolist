@@ -2,7 +2,7 @@ const theme = {
   black: '#000000',
   white: '#FFFFFF',
   sideColor: '#EDEDED',
-  mainColor: '#3B55E6',
+  mainColor: '#eeeeee',
   footerColor: '#3B3B3B',
   ligthGrey: '#F4F4F4',
   grey: '#e5e4e4',
