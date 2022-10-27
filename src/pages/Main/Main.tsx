@@ -33,8 +33,7 @@ const Main = () => {
         </TodoHeader>
         <News data={data} />
         <TodoList />
-
-        <AddTodoButton onClick={() => navigate('/addtodo')}>
+        <AddTodoButton onClick={() => navigate('/add')}>
           할 일 추가
         </AddTodoButton>
       </MainBox>
@@ -61,7 +60,7 @@ export const TodoHeader = styled.header`
   flex-direction: column;
   font-size: 26px;
   font-weight: 600;
-  padding: 30px;
+  padding: 30px 20px;
 `;
 
 const HeaderTitle = styled.span``;
@@ -74,13 +73,16 @@ const HeaderDate = styled.span`
 export const AddTodoButton = styled.button`
   width: 350px;
   height: 35px;
-  background-color: #edd81e;
+  background-color: ${({ theme }) => theme.buttonColor};
   border: none;
-  margin: 0 25px;
+  margin: 0 20px;
   font-size: 22px;
   font-weight: 500;
   border-radius: 10px;
   cursor: pointer;
   position: absolute;
-  bottom: 155px;
+  bottom: 150px;
+  &:disabled {
+    background: #e0e3e6;
+  }
 `;

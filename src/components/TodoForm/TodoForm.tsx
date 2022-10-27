@@ -1,65 +1,33 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
+import { TodoFormType } from '../../types/TodoType';
 
-const TodoForm = () => {
-  const [addForm, setAddForm] = useState({
-    title: '',
-    description: '',
-    repeat: {
-      일: false,
-      월: false,
-      화: false,
-      수: false,
-      목: false,
-      금: false,
-      토: false,
-    },
-  });
-  const [buttonDisabled, setButtonDisabled] = useState(false);
-
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setAddForm({ ...addForm, [name]: value });
-  };
-  const handleTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setAddForm({ ...addForm, [name]: value });
-  };
-
-  const handleRepeat = (day: string, value: boolean) => {
-    // setAddForm({...addForm,addForm.repeat[day]})
-    console.log(day);
-    console.log(value);
-  };
+const TodoForm = (props: TodoFormType) => {
+  const { handleInput, handleTextArea, handleRepeat, data } = props;
 
   return (
     <Form>
       <span>제목</span>
-      <TitleInput name="title" onChange={handleInput} value={addForm.title} />
+      <TitleInput name="title" onChange={handleInput} value={data.title} />
       <span>설명</span>
       <DescriptionInput
         name="description"
         onChange={handleTextArea}
-        value={addForm.description}
+        value={data.description}
       />
       <span>반복</span>
       <RepeatOptionsBox>
-        {Object.entries(addForm.repeat).map((day) => {
+        {Object.entries(data.days).map((day) => {
           return (
-            <>
-              {/* {!day[1] ? (
-               
-              ) : (
-                <RepeatButton
-                  onClick={() => handleRepeat(day[0], day[1])}
-                  key={day[0]}>
-                  {day[0]}
-                </RepeatButton>
-              )} */}
-              <SelectedButton onClick={() => console.log(day[0], day[1])}>
-                {day[0]}
-              </SelectedButton>
-            </>
+            <SelectedButton
+              onClick={(e) => {
+                e.preventDefault();
+                handleRepeat(day[0], !day[1]);
+              }}
+              key={day[0]}
+              selected={day[1]}>
+              {day[0]}
+            </SelectedButton>
           );
         })}
       </RepeatOptionsBox>
@@ -107,8 +75,8 @@ const RepeatOptionsBox = styled.div`
   padding: 10px 20px;
 `;
 
-const RepeatButton = styled.button`
-  background-color: #edd81e;
+const SelectedButton = styled.button<{ selected: boolean }>`
+  background: ${({ selected }) => (selected ? '#edd81e' : '#e0e3e6')};
   height: 30px;
   color: ${({ theme }) => theme.white};
   border: none;
@@ -116,8 +84,4 @@ const RepeatButton = styled.button`
   width: 31px;
   border-radius: 15px;
   cursor: pointer;
-`;
-
-const SelectedButton = styled(RepeatButton)`
-  background-color: #e0e3e6;
 `;
