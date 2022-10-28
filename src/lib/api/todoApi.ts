@@ -1,5 +1,5 @@
 import { instance } from './api';
-import { FormType, TodoDataType } from '../../types/TodoType';
+import { FormType } from '../../types/TodoType';
 
 export const getTodoList = async () => {
   const response = await instance.get('/todo');

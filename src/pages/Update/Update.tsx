@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import * as S from '../Main/Main';
-import * as D from '../Add/AddTodo';
+import * as D from '../Add/Add';
 import * as api from '../../lib/api/todoApi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
@@ -56,7 +56,7 @@ const PutTodo = () => {
     setUpdateForm({ ...updateForm, [name]: value });
   };
 
-  const handleRepeat = (day: string, value: string) => {
+  const handleRepeat = (day: string, value: boolean) => {
     setUpdateForm((prev) => ({
       ...prev,
       days: {
@@ -81,9 +81,9 @@ const PutTodo = () => {
         handleTextArea={handleTextArea}
         handleRepeat={handleRepeat}
       />
-      <S.AddTodoButton onClick={() => updateQuery(updateForm)}>
+      <UpdateButton onClick={() => updateQuery(updateForm)}>
         할 일 수정
-      </S.AddTodoButton>
+      </UpdateButton>
     </PutTodoBox>
   );
 };
@@ -93,3 +93,7 @@ export default PutTodo;
 const PutTodoBox = styled(S.MainBox)``;
 
 const PutTodoHeader = styled(D.AddTodoHeader)``;
+
+const UpdateButton = styled(S.AddTodoButton)`
+  margin-top: 230px;
+`;

@@ -80,8 +80,6 @@ export const AddTodoButton = styled.button`
   font-weight: 500;
   border-radius: 10px;
   cursor: pointer;
-  position: absolute;
-  bottom: 150px;
   &:disabled {
     background: #e0e3e6;
   }

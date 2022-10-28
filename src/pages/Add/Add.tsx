@@ -15,6 +15,7 @@ const AddTodo = () => {
   const [addForm, setAddForm] = useState({
     title: '',
     description: '',
+    checked: false,
     days: {
       일: false,
       월: false,
@@ -42,7 +43,7 @@ const AddTodo = () => {
     setAddForm({ ...addForm, [name]: value });
   };
 
-  const handleRepeat = (day: string, value: string) => {
+  const handleRepeat = (day: string, value: boolean) => {
     setAddForm((prev) => ({
       ...prev,
       days: {
@@ -87,9 +88,9 @@ const AddTodo = () => {
         handleTextArea={handleTextArea}
         handleRepeat={handleRepeat}
       />
-      <S.AddTodoButton disabled={!buttonAbled} onClick={deleteQuery}>
+      <AddButton disabled={!buttonAbled} onClick={deleteQuery}>
         할 일 추가
-      </S.AddTodoButton>
+      </AddButton>
     </AddTodoBox>
   );
 };
@@ -106,4 +107,8 @@ export const AddTodoHeader = styled.header`
   span {
     margin: 0 10px;
   }
+`;
+
+const AddButton = styled(S.AddTodoButton)`
+  margin-top: 230px;
 `;

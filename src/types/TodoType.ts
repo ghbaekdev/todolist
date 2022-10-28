@@ -2,6 +2,7 @@ export interface TodoDataType {
   data: {
     title: string;
     description: string;
+    checked?: boolean;
     days: {
       일: boolean;
       월: boolean;
@@ -17,13 +18,14 @@ export interface TodoDataType {
 export interface TodoFormType extends TodoDataType {
   handleInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleTextArea: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-  handleRepeat: (day: any, value: any) => void;
+  handleRepeat: (day: string, value: boolean) => void;
 }
 
 export interface FormType {
   id?: number;
   title: string;
   description: string;
+  checked?: boolean;
   days: {
     일: boolean;
     월: boolean;
@@ -39,6 +41,7 @@ export interface TodoListType {
   id: number;
   title: string;
   description: string;
+  checked?: boolean;
   days: {
     일: boolean;
     월: boolean;
