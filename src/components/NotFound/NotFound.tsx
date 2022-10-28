@@ -24,37 +24,45 @@ const NotFound = () => {
     </Wrap>
   );
 };
+
 const Wrap = styled.div`
   ${({ theme }) => theme.flexMixin('', 'center')}
 `;
+
 const Contents = styled.div`
   ${({ theme }) => theme.flexMixin('center', 'center')}
   width: 1080px;
   padding-top: 70px;
 `;
+
 const ImageSection = styled.div`
   ${({ theme }) => theme.flexMixin('', 'center')};
   margin-right: 10px;
 `;
+
 const ErrorImage = styled.img`
   width: 32rem;
 `;
+
 const TextSectoin = styled.div`
   margin-top: 80px;
-  color: ${(props) => props.theme.mainColor};
+  color: ${(props) => props.theme.black};
 `;
+
 const TextEmoticon = styled.p`
   font-size: 3rem;
   font-weight: 600;
   margin-bottom: 30px;
 `;
+
 const Text = styled.p`
   font-size: 1.4rem;
   font-weight: 500;
 `;
+
 const PrevButton = styled.button`
   margin-top: 30px;
-  background-color: ${(props) => props.theme.mainColor};
+  background-color: ${(props) => props.theme.hoverBlue};
   padding: 10px 30px;
   color: white;
   border-radius: 30px;
@@ -63,7 +71,8 @@ const PrevButton = styled.button`
   cursor: pointer;
   transition: all 0.25s ease;
   &:hover {
-    background-color: ${(props) => props.theme.hoverBlue};
+    opacity: 0.8;
   }
 `;
+
 export default NotFound;

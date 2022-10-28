@@ -34,7 +34,7 @@ const NewsWrap = styled.div`
   flex-direction: column;
   width: 100%;
   overflow: auto;
-  padding: 0 30px;
+  padding: 0 20px;
 `;
 const NewsTitle = styled.span`
   font-size: 17px;

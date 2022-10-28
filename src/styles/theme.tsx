@@ -11,6 +11,7 @@ const theme = {
   defaultText: '#101010',
   hoverBlue: '#2542E6',
   bordeRadius: '6px',
+  buttonColor: '#edd81e',
   highModalShdow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px',
   highModalDeepShdow: 'rgba(11, 11, 11, 0.8) 0px 8px 24px',
   lowModalShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 3px',
