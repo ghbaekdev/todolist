@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { FormType } from '../../../../types/TodoType';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import * as api from '../../../../lib/api/todoApi';
@@ -9,21 +8,6 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 const TodoList = () => {
-  const [checkedForm, setCheckedForm] = useState({
-    id: 0,
-    title: '',
-    description: '',
-    checked: false,
-    days: {
-      일: false,
-      월: false,
-      화: false,
-      수: false,
-      목: false,
-      금: false,
-      토: false,
-    },
-  });
   const navigate = useNavigate();
 
   const queryClient = useQueryClient();
@@ -66,7 +50,6 @@ const TodoList = () => {
           let checked;
           if (localStorage.getItem(`${todo.id}`)) {
             checked = JSON.parse(localStorage.getItem(`${todo.id}`)!);
-            console.log(checked);
           }
 
           return (
