@@ -1,6 +1,4 @@
-# purple assignment
-
-#### json server를 이용한 뉴스 정보 확인 및 투두리스트 어플리케이션
+#### json server를 이용한 뉴스 정보 확인 및 투두리스트 웹앱
 
 <br/>
 
@@ -31,6 +29,7 @@
 ![하이어엑스](https://user-images.githubusercontent.com/97820540/198778798-1e5b7139-2f3c-45a1-becb-c726b8cc7c5d.gif)
 
 <br />
+
 ### json server 링크
 
 https://drive.google.com/file/d/1x-t4PPH9lunAO4CufnBQjKgYrDaeGSg4/view?usp=sharing

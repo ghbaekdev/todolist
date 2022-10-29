@@ -12,7 +12,7 @@ import Loading from '../../components/Loading/Loading';
 import NotFound from '../../components/NotFound/NotFound';
 import useMutationQuery from '../../hooks/useMutationQuery';
 
-const PutTodo = () => {
+const Update = () => {
   const [updateForm, setUpdateForm] = useState({
     id: 0,
     title: '',
@@ -88,7 +88,7 @@ const PutTodo = () => {
   );
 };
 
-export default PutTodo;
+export default Update;
 
 const PutTodoBox = styled(S.MainBox)``;
 
