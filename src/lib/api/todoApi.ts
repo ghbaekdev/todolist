@@ -7,7 +7,7 @@ export const getTodoList = async () => {
 };
 
 export const createTodo = async (form: FormType) => {
-  const response = await instance.post<FormType>('/todo', form);
+  const response = await instance.post('/todo', form);
   return response.data;
 };
 

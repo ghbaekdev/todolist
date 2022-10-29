@@ -6,13 +6,14 @@ import { useNavigate } from 'react-router-dom';
 import * as api from '../../lib/api/todoApi';
 import * as S from '../Main/Main';
 import TodoForm from '../../components/TodoForm/TodoForm';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { FormType } from '../../types/TodoType';
+
 import NotFound from '../../components/NotFound/NotFound';
 import Loading from '../../components/Loading/Loading';
+import useMutationQuery from '../../hooks/useMutationQuery';
+import useForm from '../../hooks/useForm';
 
 const AddTodo = () => {
-  const [addForm, setAddForm] = useState({
+  const [addForm] = useState({
     title: '',
     description: '',
     checked: false,
@@ -26,46 +27,16 @@ const AddTodo = () => {
       토: false,
     },
   });
-
-  const queryClient = useQueryClient();
+  const { handleInput, handleTextArea, handleRepeat, form } = useForm(addForm);
 
   const navigate = useNavigate();
 
-  const buttonAbled = addForm.title.length > 0;
+  const buttonAbled = form.title.length > 0;
 
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setAddForm({ ...addForm, [name]: value });
-  };
+  const { mutate, isLoading, isError } = useMutationQuery(api.createTodo);
 
-  const handleTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setAddForm({ ...addForm, [name]: value });
-  };
-
-  const handleRepeat = (day: string, value: boolean) => {
-    setAddForm((prev) => ({
-      ...prev,
-      days: {
-        ...prev.days,
-        [day]: value,
-      },
-    }));
-  };
-  const { mutate, isLoading, isError } = useMutation(
-    (addForm: FormType) => api.createTodo(addForm),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(['todolist']);
-      },
-      onError: () => {
-        alert('todo 등록 실패');
-      },
-    }
-  );
-
-  const deleteQuery = () => {
-    mutate(addForm);
+  const createQuery = () => {
+    mutate(form);
     navigate('/');
   };
 
@@ -83,12 +54,12 @@ const AddTodo = () => {
         <span>할 일 추가</span>
       </AddTodoHeader>
       <TodoForm
-        data={addForm}
+        data={form}
         handleInput={handleInput}
         handleTextArea={handleTextArea}
         handleRepeat={handleRepeat}
       />
-      <AddButton disabled={!buttonAbled} onClick={deleteQuery}>
+      <AddButton disabled={!buttonAbled} onClick={createQuery}>
         할 일 추가
       </AddButton>
     </AddTodoBox>

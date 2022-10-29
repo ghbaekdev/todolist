@@ -43,10 +43,14 @@ const TodoList = () => {
       <TodoTitle>오늘의 할 일</TodoTitle>
       <ListBox>
         {todo.data?.map((todo: TodoListType) => {
-          const daysArray = Object.entries(todo.days);
-          const selectedDays = daysArray.filter(([day, selected]) => {
-            return selected && day;
-          });
+          let selectedDays;
+
+          if (todo.days) {
+            const daysArray = Object.entries(todo.days);
+            selectedDays = daysArray.filter(([day, selected]) => {
+              return selected && day;
+            });
+          }
           let checked;
           if (localStorage.getItem(`${todo.id}`)) {
             checked = JSON.parse(localStorage.getItem(`${todo.id}`)!);
@@ -64,11 +68,11 @@ const TodoList = () => {
               <TextBox>
                 <CardTitle>{todo.title}</CardTitle>
                 <CardText>{todo.description}</CardText>
-                {selectedDays.length === 0 ? (
+                {!selectedDays ? (
                   <CardText>한번만 보이는 할 일이에요.</CardText>
                 ) : (
                   <CardText>
-                    {selectedDays.map((day, idx) => {
+                    {selectedDays?.map((day, idx) => {
                       return idx === selectedDays.length - 1
                         ? `${day[0]}`
                         : `${day[0]}, `;

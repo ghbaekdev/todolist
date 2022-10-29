@@ -7,11 +7,12 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import TodoForm from '../../components/TodoForm/TodoForm';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FormType } from '../../types/TodoType';
+import Loading from '../../components/Loading/Loading';
+import NotFound from '../../components/NotFound/NotFound';
+import useMutationQuery from '../../hooks/useMutationQuery';
 
 const PutTodo = () => {
-  const queryClient = useQueryClient();
   const [updateForm, setUpdateForm] = useState({
     id: 0,
     title: '',
@@ -30,21 +31,12 @@ const PutTodo = () => {
 
   const location = useLocation();
 
-  const update = useMutation((addForm: FormType) => api.updateTodo(addForm), {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['todolist']);
-    },
-  });
+  const { mutate, isLoading, isError } = useMutationQuery(api.updateTodo);
 
   const updateQuery = (form: FormType) => {
-    update.mutate(form);
+    mutate(form);
     navigate('/');
   };
-
-  useEffect(() => {
-    const detailTodo = location.state.todo;
-    if (detailTodo) return setUpdateForm(detailTodo);
-  }, []);
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -65,6 +57,14 @@ const PutTodo = () => {
       },
     }));
   };
+
+  useEffect(() => {
+    const detailTodo = location.state.todo;
+    if (detailTodo) return setUpdateForm(detailTodo);
+  }, []);
+
+  if (isLoading) return <Loading />;
+  if (isError) return <NotFound />;
   return (
     <PutTodoBox>
       <PutTodoHeader>

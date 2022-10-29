@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useQuery } from '@tanstack/react-query';
 import { getNewsList } from '../../lib/api/newsApi';
@@ -11,13 +10,12 @@ import { WEEKDAY } from '../../lib/data/WEEKDAY';
 
 const Main = () => {
   const navigate = useNavigate();
-  const { data, isLoading, isError } = useQuery(['getNewsList'], () =>
-    getNewsList()
-  );
-
   const date = new Date();
   const todayDate = date.getDate();
   const todayDay = WEEKDAY[date.getDay()];
+  const { data, isLoading, isError } = useQuery(['getNewsList'], () =>
+    getNewsList()
+  );
 
   if (isLoading) return <Loading />;
   if (isError) return <NotFound />;
