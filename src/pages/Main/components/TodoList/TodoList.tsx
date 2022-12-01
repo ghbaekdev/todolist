@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import * as api from '../../../../lib/api/todoApi';
-import { TodoListType } from '../../../../types/TodoType';
+import { TodoListType, TodoTestType } from '../../../../types/TodoType';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,7 +12,7 @@ const TodoList = () => {
 
   const queryClient = useQueryClient();
 
-  const deleteQuery = useMutation((id: number) => api.deleteTodo(id), {
+  const deleteQuery = useMutation((keys: string) => api.deleteTodo(keys), {
     onSuccess: () => {
       queryClient.invalidateQueries(['todolist']);
     },
@@ -30,10 +30,10 @@ const TodoList = () => {
     localStorage.setItem(`${id}`, JSON.stringify({ id: checked }));
   };
 
-  const goToUpdate = (todo: any) => {
+  const goToUpdate = (key: string) => {
     navigate('/update', {
       state: {
-        todo,
+        key,
       },
     });
   };
@@ -42,65 +42,67 @@ const TodoList = () => {
     <TodoWrap>
       <TodoTitle>오늘의 할 일</TodoTitle>
       <ListBox>
-        {todo.data?.map((todo: TodoListType) => {
-          let selectedDays;
+        {todo.data &&
+          Object.keys(todo.data).map((key: string, idx: number) => {
+            const item = todo.data[key];
+            let selectedDays;
 
-          if (todo.days) {
-            const daysArray = Object.entries(todo.days);
-            selectedDays = daysArray.filter(([day, selected]) => {
-              return selected && day;
-            });
-          }
-          let checked;
-          if (localStorage.getItem(`${todo.id}`)) {
-            checked = JSON.parse(localStorage.getItem(`${todo.id}`)!);
-          }
+            if (item.days) {
+              const daysArray = Object.entries(item.days);
+              selectedDays = daysArray.filter(([day, selected]) => {
+                return selected && day;
+              });
+            }
+            let checked;
+            if (localStorage.getItem(`${item.id}`)) {
+              checked = JSON.parse(localStorage.getItem(`${item.id}`)!);
+            }
 
-          return (
-            <ListCard key={todo.id} onClick={() => goToUpdate(todo)}>
-              <CheckBox
-                type="checkbox"
-                name={todo.title}
-                defaultChecked={checked ? checked.id : null}
-                onClick={(e) => handleChecked(e, todo.id)}
-                readOnly
-              />
-              <TextBox>
-                <CardTitle>{todo.title}</CardTitle>
-                <CardText>{todo.description}</CardText>
-                {!selectedDays ? (
-                  <CardText>한번만 보이는 할 일이에요.</CardText>
-                ) : (
-                  <CardText>
-                    {selectedDays?.map((day, idx) => {
-                      return idx === selectedDays.length - 1
-                        ? `${day[0]}`
-                        : `${day[0]}, `;
-                    })}
-                    요일 반복
-                  </CardText>
-                )}
-              </TextBox>
-              <DeleteButton
-                onClick={(e) => {
-                  e.stopPropagation();
-                  deleteQuery.mutate(todo.id);
-                }}>
-                <FontAwesomeIcon
-                  icon={faXmark}
-                  style={{
-                    cursor: 'pointer',
-                    position: 'absolute',
-                    top: '2px',
-                    right: '10px',
-                    color: '#e52d58',
-                  }}
-                  size="2xl"
+            return (
+              <ListCard key={key} onClick={() => goToUpdate(key)}>
+                <CheckBox
+                  type="checkbox"
+                  name={item.title}
+                  defaultChecked={checked ? checked.id : null}
+                  onClick={(e) => handleChecked(e, item.id)}
+                  readOnly
                 />
-              </DeleteButton>
-            </ListCard>
-          );
-        })}
+                <TextBox>
+                  <CardTitle>{item.title}</CardTitle>
+                  <CardText>{item.description}</CardText>
+                  {!selectedDays ? (
+                    <CardText>한번만 보이는 할 일이에요.</CardText>
+                  ) : (
+                    <CardText>
+                      {selectedDays?.map((day, idx) => {
+                        return idx === selectedDays.length - 1
+                          ? `${day[0]}`
+                          : `${day[0]}, `;
+                      })}
+                      요일 반복
+                    </CardText>
+                  )}
+                </TextBox>
+                <DeleteButton
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    deleteQuery.mutate(key);
+                  }}>
+                  <FontAwesomeIcon
+                    icon={faXmark}
+                    style={{
+                      cursor: 'pointer',
+                      position: 'absolute',
+                      top: '2px',
+                      right: '10px',
+                      color: '#e52d58',
+                    }}
+                    size="2xl"
+                  />
+                </DeleteButton>
+              </ListCard>
+            );
+          })}
       </ListBox>
     </TodoWrap>
   );
@@ -121,7 +123,7 @@ const TodoTitle = styled.div`
 `;
 
 const ListBox = styled.div`
-  height: 250px;
+  height: 230px;
   overflow: auto;
 `;
 

@@ -5,7 +5,7 @@ const useMutationQuery = (api: any) => {
   const queryClient = useQueryClient();
 
   const { mutate, isLoading, isError } = useMutation(
-    (form: FormType) => api(form),
+    (form: FormType, key?: string) => api(form, key),
     {
       onSuccess: () => {
         queryClient.invalidateQueries(['todolist']);

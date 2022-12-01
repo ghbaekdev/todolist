@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { NewsType } from '../../../../types/NewsType';
 
-const News = ({ data }: NewsType) => {
+const News = ({ data }: { data: NewsType[] }) => {
   return (
     <NewsWrap>
       <NewsTitle>오늘의 뉴스</NewsTitle>
