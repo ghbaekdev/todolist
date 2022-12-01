@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import * as S from '../Main/Main';
 import * as D from '../Add/Add';
 import * as api from '../../lib/api/todoApi';
@@ -12,7 +11,6 @@ import NotFound from '../../components/NotFound/NotFound';
 import useMutationQuery from '../../hooks/useMutationQuery';
 import { useQuery } from '@tanstack/react-query';
 import useForm from '../../hooks/useForm';
-import { FormType } from '../../types/TodoType';
 
 const Update = () => {
   // const [updateForm, setUpdateForm] = useState({
