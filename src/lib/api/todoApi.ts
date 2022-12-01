@@ -12,6 +12,7 @@ export const getTodoList = async () => {
 
 export const createTodo = async (form: FormType) => {
   const response = await instance.post('/todos.json', form);
+  console.log(response.data);
   return response.data;
 };
 
@@ -20,7 +21,7 @@ export const deleteTodo = async (keys: string) => {
   return response.data;
 };
 
-export const updateTodo = async (key: string, form: FormType) => {
+export const updateTodo = async (form: FormType, key: string) => {
   const response = await instance.put(`/todos/${key}.json`, form);
   return response.data;
 };

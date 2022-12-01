@@ -24,10 +24,13 @@ const TodoList = () => {
   const todo = useQuery(['todolist', deleteQuery.mutate], () =>
     api.getTodoList()
   );
-  const handleChecked = (e: React.MouseEvent<HTMLInputElement>, id: number) => {
+  const handleChecked = (
+    e: React.MouseEvent<HTMLInputElement>,
+    key: string
+  ) => {
     e.stopPropagation();
     const { checked } = e.currentTarget;
-    localStorage.setItem(`${id}`, JSON.stringify({ id: checked }));
+    localStorage.setItem(`${key}`, JSON.stringify({ key: checked }));
   };
 
   const goToUpdate = (key: string) => {
@@ -43,10 +46,9 @@ const TodoList = () => {
       <TodoTitle>오늘의 할 일</TodoTitle>
       <ListBox>
         {todo.data &&
-          Object.keys(todo.data).map((key: string, idx: number) => {
+          Object.keys(todo.data).map((key: string) => {
             const item = todo.data[key];
             let selectedDays;
-
             if (item.days) {
               const daysArray = Object.entries(item.days);
               selectedDays = daysArray.filter(([day, selected]) => {
@@ -54,8 +56,8 @@ const TodoList = () => {
               });
             }
             let checked;
-            if (localStorage.getItem(`${item.id}`)) {
-              checked = JSON.parse(localStorage.getItem(`${item.id}`)!);
+            if (localStorage.getItem(`${key}`)) {
+              checked = JSON.parse(localStorage.getItem(`${key}`)!);
             }
 
             return (
@@ -63,16 +65,14 @@ const TodoList = () => {
                 <CheckBox
                   type="checkbox"
                   name={item.title}
-                  defaultChecked={checked ? checked.id : null}
-                  onClick={(e) => handleChecked(e, item.id)}
+                  defaultChecked={checked ? checked.key : null}
+                  onClick={(e) => handleChecked(e, key)}
                   readOnly
                 />
                 <TextBox>
                   <CardTitle>{item.title}</CardTitle>
                   <CardText>{item.description}</CardText>
-                  {!selectedDays ? (
-                    <CardText>한번만 보이는 할 일이에요.</CardText>
-                  ) : (
+                  {selectedDays ? (
                     <CardText>
                       {selectedDays?.map((day, idx) => {
                         return idx === selectedDays.length - 1
@@ -81,6 +81,8 @@ const TodoList = () => {
                       })}
                       요일 반복
                     </CardText>
+                  ) : (
+                    <CardText>한번만 보이는 할 일이에요.</CardText>
                   )}
                 </TextBox>
                 <DeleteButton
