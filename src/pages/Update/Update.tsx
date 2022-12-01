@@ -7,61 +7,48 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import TodoForm from '../../components/TodoForm/TodoForm';
-import { FormType } from '../../types/TodoType';
 import Loading from '../../components/Loading/Loading';
 import NotFound from '../../components/NotFound/NotFound';
 import useMutationQuery from '../../hooks/useMutationQuery';
+import { useQuery } from '@tanstack/react-query';
+import useForm from '../../hooks/useForm';
+import { FormType } from '../../types/TodoType';
 
 const Update = () => {
-  const [updateForm, setUpdateForm] = useState({
-    id: 0,
-    title: '',
-    description: '',
-    days: {
-      일: false,
-      월: false,
-      화: false,
-      수: false,
-      목: false,
-      금: false,
-      토: false,
-    },
-  });
+  // const [updateForm, setUpdateForm] = useState({
+  //   id: 0,
+  //   title: '',
+  //   description: '',
+  //   days: {
+  //     일: false,
+  //     월: false,
+  //     화: false,
+  //     수: false,
+  //     목: false,
+  //     금: false,
+  //     토: false,
+  //   },
+  // });
   const navigate = useNavigate();
 
   const location = useLocation();
 
+  const key = location.state.key;
+
   const { mutate, isLoading, isError } = useMutationQuery(api.updateTodo);
 
-  const updateQuery = (form: FormType) => {
-    mutate(form);
+  const updateQuery = () => {
+    mutate(form, key);
     navigate('/');
   };
 
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setUpdateForm({ ...updateForm, [name]: value });
-  };
+  const todo = useQuery(['detailList'], () =>
+    api.detailTodo(location.state.key)
+  );
 
-  const handleTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setUpdateForm({ ...updateForm, [name]: value });
-  };
-
-  const handleRepeat = (day: string, value: boolean) => {
-    setUpdateForm((prev) => ({
-      ...prev,
-      days: {
-        ...prev.days,
-        [day]: value,
-      },
-    }));
-  };
-
-  useEffect(() => {
-    const detailTodo = location.state.todo;
-    if (detailTodo) return setUpdateForm(detailTodo);
-  }, []);
+  const { handleInput, handleTextArea, handleRepeat, form } = useForm(
+    todo.data
+  );
 
   if (isLoading) return <Loading />;
   if (isError) return <NotFound />;
@@ -75,15 +62,16 @@ const Update = () => {
         />
         <span>할 일 수정</span>
       </PutTodoHeader>
-      <TodoForm
-        data={updateForm}
-        handleInput={handleInput}
-        handleTextArea={handleTextArea}
-        handleRepeat={handleRepeat}
-      />
-      <UpdateButton onClick={() => updateQuery(updateForm)}>
-        할 일 수정
-      </UpdateButton>
+      {form && (
+        <TodoForm
+          data={form}
+          handleInput={handleInput}
+          handleTextArea={handleTextArea}
+          handleRepeat={handleRepeat}
+        />
+      )}
+
+      <UpdateButton onClick={updateQuery}>할 일 수정</UpdateButton>
     </PutTodoBox>
   );
 };
