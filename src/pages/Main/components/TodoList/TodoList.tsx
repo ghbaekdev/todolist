@@ -71,18 +71,19 @@ const TodoList = () => {
                 <TextBox>
                   <CardTitle>{item.title}</CardTitle>
                   <CardText>{item.description}</CardText>
-                  {selectedDays ? (
-                    <CardText>
-                      {selectedDays?.map((day, idx) => {
-                        return idx === selectedDays.length - 1
-                          ? `${day[0]}`
-                          : `${day[0]}, `;
-                      })}
-                      요일 반복
-                    </CardText>
-                  ) : (
-                    <CardText>한번만 보이는 할 일이에요.</CardText>
-                  )}
+                  {selectedDays &&
+                    (selectedDays.length > 0 ? (
+                      <CardText>
+                        {selectedDays?.map((day, idx) => {
+                          return idx === selectedDays.length - 1
+                            ? `${day[0]}`
+                            : `${day[0]}, `;
+                        })}
+                        요일 반복
+                      </CardText>
+                    ) : (
+                      <CardText>한번만 보이는 할 일이에요.</CardText>
+                    ))}
                 </TextBox>
                 <DeleteButton
                   onClick={(e) => {
