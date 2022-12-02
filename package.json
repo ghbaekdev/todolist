@@ -33,7 +33,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "aws s3 sync ./build s3://baekstodo --profile=baektest",
+    "invalidate": "aws cloudfront create-invalidation --profile=baektest --distribution-id E35NA3VMF55TAK"
   },
   "eslintConfig": {
     "extends": [
