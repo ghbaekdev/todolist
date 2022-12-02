@@ -40,7 +40,7 @@ export interface FormType {
 }
 
 export interface TodoListType {
-  id?: number;
+  id: number;
   title: string;
   description: string;
   checked?: boolean;
@@ -53,8 +53,4 @@ export interface TodoListType {
     금: boolean;
     토: boolean;
   };
-}
-
-export interface Test {
-  data: TodoListType;
 }

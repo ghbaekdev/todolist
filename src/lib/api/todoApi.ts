@@ -1,9 +1,5 @@
 import { FormType } from '../../types/TodoType';
-import axios from 'axios';
-
-export const instance = axios.create({
-  baseURL: 'https://baeks-todo-default-rtdb.firebaseio.com',
-});
+import { instance } from './api';
 
 export const getTodoList = async () => {
   const response = await instance.get('/todos.json');
@@ -21,8 +17,14 @@ export const deleteTodo = async (keys: string) => {
   return response.data;
 };
 
+// export const updateTodo = async (form: FormType, key: string) => {
+//   const updateForm = { key: form };
+//   const response = await instance.put(`/todos.json`, updateForm);
+//   return response.data;
+// };
 export const updateTodo = async (form: FormType, key: string) => {
-  const response = await instance.put(`/todos/${key}.json`, form);
+  const updateForm = { [key]: form };
+  const response = await instance.put(`/todos.json`, updateForm);
   return response.data;
 };
 

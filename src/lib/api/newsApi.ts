@@ -1,5 +1,5 @@
-import axios from 'axios';
 import { NewsType } from '../../types/NewsType';
+import { instance } from './api';
 
 let date = new Date();
 let year = date.getFullYear();
@@ -8,11 +8,6 @@ let day = date.getDate();
 
 const today = `${year}-${month}-${day}`;
 
-export const instance = axios.create({
-  baseURL: 'https://baeks-todo-default-rtdb.firebaseio.com',
-});
-
-// ?writedAt=${today}
 export const getNewsList = async () => {
   const response = await instance.get(`/news.json`);
 

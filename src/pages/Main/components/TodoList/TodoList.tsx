@@ -71,7 +71,7 @@ const TodoList = () => {
                 <TextBox>
                   <CardTitle>{item.title}</CardTitle>
                   <CardText>{item.description}</CardText>
-                  {selectedDays ? (
+                  {selectedDays && selectedDays.length > 0 ? (
                     <CardText>
                       {selectedDays?.map((day, idx) => {
                         return idx === selectedDays.length - 1
