@@ -1,5 +1,6 @@
 import axios from 'axios';
+import { firebaseConfig } from '../../firebase';
 
 export const instance = axios.create({
-  baseURL: 'http://localhost:9000',
+  baseURL: firebaseConfig.databaseURL,
 });

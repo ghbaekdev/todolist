@@ -1,9 +1,5 @@
 import { FormType } from '../../types/TodoType';
-import axios from 'axios';
-
-export const instance = axios.create({
-  baseURL: 'https://baeks-todo-default-rtdb.firebaseio.com',
-});
+import { instance } from './api';
 
 export const getTodoList = async () => {
   const response = await instance.get('/todos.json');
