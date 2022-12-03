@@ -1,11 +1,13 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { FormType } from '../types/TodoType';
+import { FormType, UpdateDataType } from '../types/TodoType';
 
 const useMutationQuery = (api: any) => {
   const queryClient = useQueryClient();
 
   const { mutate, isLoading, isError } = useMutation(
-    (form: FormType, key?: string) => api(form, key),
+    (form: FormType | UpdateDataType) => {
+      return api(form);
+    },
     {
       onSuccess: () => {
         queryClient.invalidateQueries(['todolist']);

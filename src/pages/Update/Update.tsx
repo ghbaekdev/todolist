@@ -8,9 +8,9 @@ import styled from 'styled-components';
 import TodoForm from '../../components/TodoForm/TodoForm';
 import Loading from '../../components/Loading/Loading';
 import NotFound from '../../components/NotFound/NotFound';
-import useMutationQuery from '../../hooks/useMutationQuery';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
+import useMutationQuery from '../../hooks/useMutationQuery';
 
 const Update = () => {
   const [updateForm, setUpdateForm] = useState({
@@ -36,7 +36,7 @@ const Update = () => {
   const { mutate, isLoading, isError } = useMutationQuery(api.updateTodo);
 
   const updateQuery = () => {
-    mutate(updateForm, key);
+    mutate({ [key]: updateForm });
     navigate('/');
   };
 
@@ -84,7 +84,7 @@ const Update = () => {
         handleTextArea={handleTextArea}
         handleRepeat={handleRepeat}
       />
-      <UpdateButton onClick={updateQuery}>할 일 수정</UpdateButton>
+      <UpdateButton onClick={() => updateQuery()}>할 일 수정</UpdateButton>
     </PutTodoBox>
   );
 };

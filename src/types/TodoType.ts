@@ -54,3 +54,7 @@ export interface TodoListType {
     토: boolean;
   };
 }
+
+export interface UpdateDataType {
+  [key: string]: FormType;
+}
