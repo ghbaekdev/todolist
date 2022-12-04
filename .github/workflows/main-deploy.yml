@@ -11,13 +11,9 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
-    env:
-      REACT_APP_NEWS_API_KEY: ${{secrets.REACT_APP_NEWS_API_KEY}}
-
     steps:
       - name: Checkout source code
         uses: actions/checkout@v3
-        run: $REACT_APP_NEWS_API_KEY
 
       - name: Node setup
         uses: actions/setup-node@v3
@@ -34,6 +30,7 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          REACT_APP_NEWS_API_KEY: ${{secrets.REACT_APP_NEWS_API_KEY}}
 
         run: |
           aws s3 cp \
