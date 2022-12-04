@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import { useQuery } from '@tanstack/react-query';
-import { getNewsList } from '../../lib/api/newsApi';
 import NotFound from '../../components/NotFound/NotFound';
 import Loading from '../../components/Loading/Loading';
 import News from './components/News/News';
 import TodoList from './components/TodoList/TodoList';
 import { useNavigate } from 'react-router-dom';
 import { WEEKDAY } from '../../lib/data/WEEKDAY';
+import { getNewsList } from '../../lib/api/newsApi';
 
 const Main = () => {
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ const Main = () => {
             오늘은 {todayDate}일 {todayDay}요일이에요
           </HeaderDate>
         </TodoHeader>
-        <News data={data} />
+        <News data={data.articles} />
         <TodoList />
         <AddTodoButton onClick={() => navigate('/add')}>
           할 일 추가
