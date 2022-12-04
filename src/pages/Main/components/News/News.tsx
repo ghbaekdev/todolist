@@ -83,6 +83,6 @@ const CardPublishedDate = styled.div`
   margin: auto 5px 5px 5px;
   display: flex;
   span {
-    margin-right: 10px;
+    margin-right: 5px;
   }
 `;
