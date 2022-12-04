@@ -10,8 +10,10 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     env:
     REACT_APP_NEWS_API_KEY: ${{secrets.REACT_APP_NEWS_API_KEY}}
+
     steps:
       - name: Checkout source code
         uses: actions/checkout@v3
