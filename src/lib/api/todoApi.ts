@@ -1,5 +1,10 @@
 import { FormType } from '../../types/TodoType';
-import { instance } from './api';
+import axios from 'axios';
+import { firebaseConfig } from '../../firebase';
+
+export const instance = axios.create({
+  baseURL: firebaseConfig.databaseURL,
+});
 
 export const getTodoList = async () => {
   const response = await instance.get('/todos.json');
