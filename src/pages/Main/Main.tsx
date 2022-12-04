@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-// import { useQuery } from '@tanstack/react-query';
-// import NotFound from '../../components/NotFound/NotFound';
-// import Loading from '../../components/Loading/Loading';
-// import News from './components/News/News';
+import { useQuery } from '@tanstack/react-query';
+import NotFound from '../../components/NotFound/NotFound';
+import Loading from '../../components/Loading/Loading';
+import News from './components/News/News';
 import TodoList from './components/TodoList/TodoList';
 import { useNavigate } from 'react-router-dom';
-// import { getNewsList } from '../../lib/api/newsApi';
+import { getNewsList } from '../../lib/api/newsApi';
 import { WEEKDAYDATA } from '../../lib/data/WEEKDAY';
 
 const Main = () => {
@@ -14,12 +14,12 @@ const Main = () => {
   const todayDate = date.getDate();
   const todayDay = Object.keys(WEEKDAYDATA)[date.getDay()];
 
-  // const { data, isLoading, isError } = useQuery(['getNewsList'], () =>
-  //   getNewsList()
-  // );
+  const { data, isLoading, isError } = useQuery(['getNewsList'], () =>
+    getNewsList()
+  );
 
-  // if (isLoading) return <Loading />;
-  // if (isError) return <NotFound />;
+  if (isLoading) return <Loading />;
+  if (isError) return <NotFound />;
 
   return (
     <Wrap>
@@ -30,7 +30,7 @@ const Main = () => {
             오늘은 {todayDate}일 {todayDay}요일이에요
           </HeaderDate>
         </TodoHeader>
-        {/* <News data={data.articles} /> */}
+        <News data={data.articles} />
         <TodoList />
         <AddTodoButton onClick={() => navigate('/add')}>
           할 일 추가
