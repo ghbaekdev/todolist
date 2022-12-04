@@ -3,14 +3,17 @@ export interface TodoTestType {
   title: string;
   description: string;
   checked?: boolean;
+  // days: {
+  //   일: boolean;
+  //   월: boolean;
+  //   화: boolean;
+  //   수: boolean;
+  //   목: boolean;
+  //   금: boolean;
+  //   토: boolean;
+  // };
   days: {
-    일: boolean;
-    월: boolean;
-    화: boolean;
-    수: boolean;
-    목: boolean;
-    금: boolean;
-    토: boolean;
+    [key: string]: boolean;
   };
 }
 export interface TodoDataType {
@@ -58,3 +61,5 @@ export interface TodoListType {
 export interface UpdateDataType {
   [key: string]: FormType;
 }
+
+export type selectedDaysElement = [string, unknown];

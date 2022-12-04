@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { WEEKDAYDATA } from '../../lib/data/WEEKDAY';
 import { TodoFormType } from '../../types/TodoType';
 
 const TodoForm = (props: TodoFormType) => {
@@ -17,16 +18,16 @@ const TodoForm = (props: TodoFormType) => {
       />
       <span>반복</span>
       <RepeatOptionsBox>
-        {Object.entries(data.days).map((day) => {
+        {Object.keys(WEEKDAYDATA).map((day: string) => {
           return (
             <SelectedButton
               onClick={(e) => {
                 e.preventDefault();
-                handleRepeat(day[0], !day[1]);
+                handleRepeat(day, !data.days[day]);
               }}
-              key={day[0]}
-              selected={day[1]}>
-              {day[0]}
+              key={day}
+              selected={data.days[day]}>
+              {day}
             </SelectedButton>
           );
         })}

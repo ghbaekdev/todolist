@@ -5,14 +5,15 @@ import Loading from '../../components/Loading/Loading';
 import News from './components/News/News';
 import TodoList from './components/TodoList/TodoList';
 import { useNavigate } from 'react-router-dom';
-import { WEEKDAY } from '../../lib/data/WEEKDAY';
 import { getNewsList } from '../../lib/api/newsApi';
+import { WEEKDAYDATA } from '../../lib/data/WEEKDAY';
 
 const Main = () => {
   const navigate = useNavigate();
   const date = new Date();
   const todayDate = date.getDate();
-  const todayDay = WEEKDAY[date.getDay()];
+  const todayDay = Object.keys(WEEKDAYDATA)[date.getDay()];
+
   const { data, isLoading, isError } = useQuery(['getNewsList'], () =>
     getNewsList()
   );
