@@ -22,6 +22,8 @@ jobs:
           restore-keys: |
             ${{ runner.OS }}-build-
             ${{ runner.OS }}-
+        run: |
+          echo "REACT_APP_NEWS_API_KEY=${{ secrets.REACT_APP_NEWS_API_KEY }}" >> .env
 
       - name: Install Dependencies
         run: npm install
