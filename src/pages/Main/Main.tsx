@@ -30,7 +30,7 @@ const Main = () => {
             오늘은 {todayDate}일 {todayDay}요일이에요
           </HeaderDate>
         </TodoHeader>
-        <News data={data.articles} />
+        <News data={data} />
         <TodoList />
         <AddTodoButton onClick={() => navigate('/add')}>
           할 일 추가

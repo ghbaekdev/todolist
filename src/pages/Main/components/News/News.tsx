@@ -1,22 +1,22 @@
 import styled from 'styled-components';
+import { NewsType } from '../../../../types/NewsType';
 
-const News = ({ data }: { data: any }) => {
+const News = ({ data }: { data: NewsType[] }) => {
   return (
     <NewsWrap>
       <NewsTitle>오늘의 뉴스</NewsTitle>
       <CardWrap>
-        {data.map((news: any, index: number) => {
-          const date = news.publishedAt.split('T')[0];
-          const time = news.publishedAt.split('T')[1].slice(0, 5);
+        {data.map((news, index) => {
+          const date = news.writedAt.split(' ')[0];
           return (
             <CardAnchor href={news.url} key={index}>
               <NewsCard>
-                <CardImg src={news.urlToImage} alt="news image" />
+                <CardImg src={news.image} alt="news image" />
                 <CardTitle>{news.title}</CardTitle>
-                <CardPublishedDate>
+                <CardDescription>
+                  <span>{news.press}</span>
                   <span>{date}</span>
-                  <span>{time}</span>
-                </CardPublishedDate>
+                </CardDescription>
               </NewsCard>
             </CardAnchor>
           );
@@ -51,7 +51,6 @@ const NewsCard = styled.div`
   background-color: white;
   border-radius: 15px;
   width: 140px;
-  height: 180px;
   margin-right: 10px;
   &:hover {
     margin-top: -10px;
@@ -66,7 +65,6 @@ const CardAnchor = styled.a`
 
 const CardImg = styled.img`
   width: 140px;
-  height: 120px;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
 `;
@@ -77,12 +75,11 @@ const CardTitle = styled.span`
   margin: 5px 5px;
 `;
 
-const CardPublishedDate = styled.div`
-  font-weight: 300;
-  font-size: 11px;
-  margin: auto 5px 5px 5px;
-  display: flex;
+const CardDescription = styled.span`
+  font-weight: 200;
+  margin: 0 5px 5px 5px;
   span {
-    margin-right: 5px;
+    font-size: 5px;
+    padding: 0 2px;
   }
 `;
